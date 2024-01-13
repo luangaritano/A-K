@@ -1,6 +1,7 @@
 import express from "express";
 import conectaNaDataBase from "./config/dbConnect.js";
-import films from "./models/Film.js";
+import routes from "./routes/index.js";
+
 
 
 const conexao = await conectaNaDataBase();
@@ -14,24 +15,26 @@ conexao.once("open", () => {
 })
 
 const app = express();
-app.use(express.json());
+routes(app);
 
-app.get("/", async (req, res) => {
-    const listFilms = await films.find();
-    res.status(200).json(listFilms);
-});
+//app.use(express.json());
 
-app.post("/", async (req, res) =>{
-    const film = new films({
-        title: req.body.title,
-        description: req.body.description,
-        image_url: req.body.image_url,
-        trailer_url: req.body.trailer_url
-    })
+//app.get("/", async (req, res) => {
+  //  const listFilms = await films.find();
+    //res.status(200).json(listFilms);
+//});
 
-    await film.save()
-    res.send(film);
-});
+// app.post("/", async (req, res) =>{
+  //  const film = new films({
+    //    title: req.body.title,
+    //    description: req.body.description,
+      //  image_url: req.body.image_url,
+        //trailer_url: req.body.trailer_url
+    //})
+
+    //await film.save()
+    //res.send(film);
+//});
 
 
 app.put("/:id", async (req,res) =>{
