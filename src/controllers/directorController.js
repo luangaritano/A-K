@@ -1,31 +1,31 @@
-import films from "../models/Film.js";
+import { director, directorSchema } from "../models/Director.js"
 
-class FilmController {
+class DirectorController {
 
-    static async filmsList (req, res) {
+    static async directorsList (req, res) {
         try{
-        const listFilms = await films.find({});
-        res.status(200).json(listFilms);
+        const listDirectors = await director.find({});
+        res.status(200).json(listDirectors);
 
         } catch(erro){
         res.status(500).json({message: `${erro.message} - request failure`});
     };
 };
-    static async listFilmById (req, res) {
+    static async listDirectorById (req, res) {
         try{
         const id = req.params.id;
-        const filmById = await films.findById(id);
-        res.status(200).json(filmById);
+        const directorById = await director.findById(id);
+        res.status(200).json(directorById);
 
         } catch(erro){
         res.status(500).json({message: `${erro.message} - request failure`});
     };
 };  
 
-    static async registerFilm (req, res) {
+    static async registerDirector (req, res) {
         try{
-        const newfilm = await films.create(req.body);
-        res.status(201).json({message: "successfully registered!", films:newfilm });
+        const newDirector = await director.create(req.body);
+        res.status(201).json({message: "successfully registered!", director:newDirector});
 
     } catch(erro){
         res.status(500).json({message: `${erro.message} - failed to register `});
@@ -33,10 +33,10 @@ class FilmController {
     };
 };
 
-    static async updateFilm (req, res) {
+    static async updateDirector (req, res) {
         try{
         const id = req.params.id;
-        await films.findByIdAndUpdate(id, req.body);
+        await director.findByIdAndUpdate(id, req.body);
         res.status(200).json({message: "updated successfully"});
 
     } catch(erro){
@@ -45,10 +45,10 @@ class FilmController {
     };
 };
 
-    static async deleteFilm(req, res){
+    static async deleteDirector(req, res){
         try{
         const id = req.params.id;
-        await films.findByIdAndDelete(id);
+        await director.findByIdAndDelete(id);
         res.status(200).json({message: "successfully deleted!"});   
         
     } catch(erro){
@@ -63,4 +63,4 @@ class FilmController {
 
 
 
-export default FilmController;
+export default DirectorController;
