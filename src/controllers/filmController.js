@@ -1,4 +1,5 @@
 import films from "../models/Film.js";
+import { director } from "../models/Director.js";
 
 class FilmController {
 
@@ -23,8 +24,12 @@ class FilmController {
 };  
 
     static async registerFilm (req, res) {
+        const newfilm = req.body;
+        
         try{
-        const newfilm = await films.create(req.body);
+        const directorFound = await director.findById(newfilm.director);
+        const fullMovie = { ...newfilm, director: {...directorFound._doc }};
+        const filmCreate = await films.create(fullMovie);
         res.status(201).json({message: "successfully registered!", films:newfilm });
 
     } catch(erro){
@@ -45,7 +50,7 @@ class FilmController {
     };
 };
 
-    static async deleteFilm(req, res){
+    static async deleteFilm (req, res){
         try{
         const id = req.params.id;
         await films.findByIdAndDelete(id);
@@ -56,6 +61,18 @@ class FilmController {
 
     };
 };
+
+    static async listFilmByProducer (req, res){
+        const producer = req.query.producer;
+        try{
+        const listFilmByProducer = await films.find({producer:producer});
+        res.status(200).json(listFilmByProducer);
+
+        } catch(erro){
+          res.status(500).json({message:`${erro.message} - request failure`});  
+
+        }
+    }
 
 
 };

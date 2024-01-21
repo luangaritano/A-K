@@ -1,4 +1,4 @@
-import { director, directorSchema } from "../models/Director.js"
+import { director } from "../models/Director.js";
 
 class DirectorController {
 

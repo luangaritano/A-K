@@ -5,11 +5,10 @@ const directorSchema = new mongoose.Schema({
     id: { type:mongoose.Schema.Types.ObjectId},
     name: { type: String, required: true },
     title:{ type:String },
-    nationality: { type: String },
-    date:{ type: Number },
+    nationality: { type: String }
 }, {versionKey: false});
 
 const director = mongoose.model("directors", directorSchema);
 
 
-export default { director, directorSchema }
+export { director, directorSchema }
